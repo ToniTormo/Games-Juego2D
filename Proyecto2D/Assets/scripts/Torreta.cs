@@ -5,12 +5,16 @@ using UnityEditor;
 public class Torreta : MonoBehaviour
 {
 
-    [SerializeField] private Transform giro; //Probablemente no se use
+    [SerializeField] private Transform giro; 
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private float rango= 5f;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform canon;
+    [SerializeField] private float veldis= 1f; //balas por segundo
 
     
     private Transform target;
+    private float tiempo_disparo;
     
     private void OnDrawGizmosSelected()
     {
@@ -50,11 +54,24 @@ public class Torreta : MonoBehaviour
         Findtarget();
         return;
        }
-        Debug.Log(Angulo());
+        //Debug.Log(Angulo());
         Rotacion();
         if (!CheckRango()){
             target=null;
+        } else{
+            tiempo_disparo+= Time.deltaTime;
+            if(tiempo_disparo >= 1f/veldis){
+                Disparar();
+                tiempo_disparo=0f;
+            }
         }
 
+    }
+    private void Disparar(){
+        //Debug.Log("Fuego");
+        GameObject balaobj=Instantiate(bulletPrefab,canon.position,Quaternion.identity);
+        Bala balascript= balaobj.GetComponent<Bala>();
+        balascript.fijar_objetivo(target);
+        
     }
 }
