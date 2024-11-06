@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 3867031200749581334}
   - component: {fileID: 2684958181127603809}
   m_Layer: 3
-  m_Name: Torreta
+  m_Name: Torreta 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,7 +160,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f53fa443c23e0d24fa0e861d397928cc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9056604, g: 0.2939124, b: 0.2939124, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
