@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 public class Torreta : MonoBehaviour
 {
@@ -11,6 +12,16 @@ public class Torreta : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform canon;
     [SerializeField] private float veldis= 1f; //balas por segundo
+    [SerializeField] private int costomejora= 100;
+
+    [SerializeField] private GameObject upgradeUI;
+    [SerializeField] private Button upgradeButton;
+    private int nivel=1;
+    private float rangobase;
+    private float veldisbase;
+    private int costomejorabase;
+
+
 
     
     private Transform target;
@@ -44,7 +55,11 @@ public class Torreta : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        rangobase=rango;
+        veldisbase=veldis;
+        costomejorabase=costomejora;
+
+        upgradeButton.onClick.AddListener(Mejorar);
     }
 
     // Update is called once per frame
@@ -73,5 +88,40 @@ public class Torreta : MonoBehaviour
         Bala balascript= balaobj.GetComponent<Bala>();
         balascript.fijar_objetivo(target);
         
+    }
+    public void OpenUpgrade(){
+        upgradeUI.SetActive(true);
+    }
+    public void CloseUpgrade(){
+        upgradeUI.SetActive(false);
+        UIManager.main.SetHovering(false);
+    }
+
+    public void Mejorar(){
+        if (costomejora > GameController.main.capital){ 
+        return;} else{
+
+        costomejora=calcular_costo();
+        GameController.main.gastar(costomejora);
+
+        nivel++;
+
+        veldis=calcular_velocidad();
+        rango=calcular_rango();
+
+        CloseUpgrade();
+        }
+    }
+
+    private float calcular_velocidad(){
+        return veldisbase*Mathf.Pow(nivel,0.5f);
+    }
+
+    private float calcular_rango(){
+        return rangobase*Mathf.Pow(nivel,0.4f);
+    }
+
+    private int calcular_costo(){
+        return Mathf.RoundToInt(costomejorabase*Mathf.Pow(nivel,0.8f));
     }
 }

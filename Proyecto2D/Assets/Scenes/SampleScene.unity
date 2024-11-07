@@ -1642,6 +1642,7 @@ GameObject:
   - component: {fileID: 1160201236}
   - component: {fileID: 1160201238}
   - component: {fileID: 1160201239}
+  - component: {fileID: 1160201240}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1742,6 +1743,18 @@ MonoBehaviour:
   - name: Slow
     coste: 20
     prefab: {fileID: 4867787358411435584, guid: c27999b1b43f3324fb02a59d0c811cee, type: 3}
+--- !u!114 &1160201240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160201235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4de165755953a64458a1a8a2b46e2f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1181812970
 GameObject:
   m_ObjectHideFlags: 0

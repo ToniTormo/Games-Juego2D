@@ -9,7 +9,8 @@ public class Plot : MonoBehaviour
     //public Renderer render;
 
 
-    private GameObject torre;
+    private GameObject torreobj;
+    private Torreta torre;
     private Color color_inicial;
     
     
@@ -33,10 +34,14 @@ public class Plot : MonoBehaviour
 
     void OnMouseDown()
     {
-       if (torre != null) return;
+        if (UIManager.main.IsHoveringUI()) return;
 
+        if (torreobj != null){
+            torre.OpenUpgrade();
 
+            return;
 
+        }
        Defensa torre_nueva= BuildManager.main.GetTorreta();
 
        if (torre_nueva.coste > GameController.main.capital){
@@ -45,8 +50,9 @@ public class Plot : MonoBehaviour
        }
 
        GameController.main.gastar(torre_nueva.coste);
-       torre=Instantiate(torre_nueva.prefab,transform.position,Quaternion.identity);
-
+       torreobj=Instantiate(torre_nueva.prefab,transform.position,Quaternion.identity);
+       torre=torreobj.GetComponent<Torreta>();
+    
        
     }
 

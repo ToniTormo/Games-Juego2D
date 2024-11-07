@@ -44,3 +44,6 @@ TagManager:
   - name: Torretas
     uniqueID: 2
     locked: 0
+  - name: UI
+    uniqueID: 211243417
+    locked: 0

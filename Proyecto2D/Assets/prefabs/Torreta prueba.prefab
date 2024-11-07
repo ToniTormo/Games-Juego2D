@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 3867031200749581334}
   - component: {fileID: 2684958181127603809}
   m_Layer: 3
-  m_Name: Torreta 1
+  m_Name: Torreta prueba
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
