@@ -8,9 +8,12 @@ public class Move : MonoBehaviour
     private Transform target;
     private int pathIndex = 0;
 
+    private float baseSpeed;
+
     private void Start()
     {
         // Set the initial target as the first point in the path
+        baseSpeed=speed;
         target = GameController.main.path[pathIndex];
     }
 
@@ -41,5 +44,11 @@ public class Move : MonoBehaviour
         // Calculate the movement direction and apply it to the rigidbody
         Vector2 direction = (target.position - transform.position).normalized;
         rb.velocity = direction * speed;
+    }
+    public void Cambio_speed(float _speed){
+        speed -= _speed;
+    }
+    public void Reset_speed(){
+        speed=baseSpeed;
     }
 }

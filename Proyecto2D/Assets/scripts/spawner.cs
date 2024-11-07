@@ -69,8 +69,9 @@ public class spawner : MonoBehaviour
 
     private void CrearEnemigo()
     {
+        int index = Random.Range(0,enemigos.Length);
         Debug.Log("Creando enemigo");
-        GameObject enemigoACrear = enemigos[0];
+        GameObject enemigoACrear = enemigos[index];
         Instantiate(enemigoACrear, GameController.main.inicio.position, Quaternion.identity);
         
     }
