@@ -2,39 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Clase Bala, que representa el comportamiento de una bala en el juego.
 public class Bala : MonoBehaviour
 {
-
+    // Componente Rigidbody2D que se usa para manejar la física de la bala.
     [SerializeField] private Rigidbody2D rb;
 
+    // Velocidad de la bala.
     [SerializeField] private float velocidad = 5f;
+
+    // Daño que la bala inflige al impactar.
     [SerializeField] private int dmg = 1;
 
+    // Variable que guarda el objetivo al que la bala se dirige.
     private Transform target;
 
+    // Método público para establecer el objetivo de la bala.
     public void fijar_objetivo(Transform objetivo){
-        target=objetivo;
+        target = objetivo;
     }
     
+    // Método FixedUpdate, llamado a intervalos de tiempo constantes, para mover la bala.
     void FixedUpdate()
     {
+        // Si no hay objetivo, la bala no se mueve.
         if (!target) return;
-        Vector2 direction= (target.position-transform.position).normalized;
-        rb.velocity=direction*velocidad;
+
+        // Calcula la dirección hacia el objetivo y mueve la bala hacia él.
+        Vector2 direction = (target.position - transform.position).normalized;
+        rb.velocity = direction * velocidad;
     }
     
+    // Evento que se activa al colisionar con otro objeto.
     void OnCollisionEnter2D(Collision2D other)
     {
+        // Si el objeto colisionado tiene el componente Vida, le inflige daño.
         other.gameObject.GetComponent<Vida>().recibir_daño(dmg);
+
+        // Destruye la bala tras impactar.
         Destroy(gameObject);
     }
-    // Start is called before the first frame update
+
+    // Método Start, llamado al iniciar el script. Actualmente no contiene funcionalidad.
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    // Método Update, llamado una vez por cuadro. Actualmente no contiene funcionalidad.
     void Update()
     {
         
