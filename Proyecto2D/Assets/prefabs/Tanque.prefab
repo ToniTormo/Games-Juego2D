@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a27e186c72e4346b0b921ee3cd14f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 1.3
   rb: {fileID: 2285733590616888145}
 --- !u!114 &-2823544230739098245
 MonoBehaviour:
@@ -176,5 +176,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a1d330281c69294a8681955f8cbc9bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puntos: 15
-  reward: 100
+  puntos: 300
+  reward: 20

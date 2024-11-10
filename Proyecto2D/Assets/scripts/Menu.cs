@@ -36,4 +36,9 @@ public class Menu : MonoBehaviour
     {
         
     }
+    
+    void Update()
+    {
+        capitalUI.text = GameController.main.capital.ToString();
+    }
 }

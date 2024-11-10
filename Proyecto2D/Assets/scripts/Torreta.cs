@@ -131,11 +131,9 @@ public class Torreta : MonoBehaviour
         if (costomejora > GameController.main.capital){ 
             return;
         } else {
-            costomejora = calcular_costo();
             GameController.main.gastar(costomejora);
-
             nivel++;
-
+            costomejora = calcular_costo();
             veldis = calcular_velocidad();
             rango = calcular_rango();
 

@@ -44,6 +44,9 @@ TagManager:
   - name: Torretas
     uniqueID: 2
     locked: 0
+  - name: Balas
+    uniqueID: 2510618745
+    locked: 0
   - name: UI
     uniqueID: 211243417
     locked: 0
