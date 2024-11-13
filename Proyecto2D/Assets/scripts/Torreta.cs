@@ -34,6 +34,9 @@ public class Torreta : MonoBehaviour
     // Botón de mejora.
     [SerializeField] private Button upgradeButton;
 
+    [SerializeField] private Transform rangoVisual; // Objeto hijo que representa el rango visual.
+
+
     // Variables de nivel y propiedades base.
     private int nivel = 1;
     private float rangobase;
@@ -52,6 +55,7 @@ public class Torreta : MonoBehaviour
         Handles.color = Color.cyan;
         Handles.DrawWireDisc(transform.position, transform.forward, rango);
     }
+
 
     // Encuentra el objetivo más cercano en el rango de la torreta.
     private void Findtarget(){
@@ -85,11 +89,14 @@ public class Torreta : MonoBehaviour
         costomejorabase = costomejora;
 
         upgradeButton.onClick.AddListener(Mejorar);
+
     }
 
     // Actualización por cuadro para controlar el comportamiento de la torreta.
     void Update()
     {
+       AjustarRangoVisual();
+
        if (target == null){
             Findtarget();
             return;
@@ -136,6 +143,8 @@ public class Torreta : MonoBehaviour
             costomejora = calcular_costo();
             veldis = calcular_velocidad();
             rango = calcular_rango();
+            AjustarRangoVisual();
+            
 
             CloseUpgrade();
         }
@@ -154,5 +163,14 @@ public class Torreta : MonoBehaviour
     // Calcula el costo de la mejora en función del nivel.
     private int calcular_costo(){
         return Mathf.RoundToInt(costomejorabase * Mathf.Pow(nivel, 0.8f));
+    }
+
+    private void AjustarRangoVisual()
+    {
+        
+        // Calcula la escala en función del rango y del tamaño inicial del sprite
+        float escala = 34/rango; // Equivalencia en unity. = 34/6= 5.7
+        rangoVisual.localScale = new Vector3(5.7f*rango, 5.7f*rango, 1f);
+        
     }
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
+
 
 public class spawner : MonoBehaviour
 {
@@ -20,6 +22,8 @@ public class spawner : MonoBehaviour
     private int enemigosVivos;  // Número de enemigos actualmente vivos
     private int enemigosEnSpawn;  // Número de enemigos que faltan por generar en la oleada
     private bool enSpawn = false;  // Estado que indica si se están generando enemigos en la oleada actual
+    [SerializeField] private RawImage barImg;
+    float currentTime;
 
     public static UnityEvent OnEnemigoMuerto = new UnityEvent();  // Evento que se dispara cuando un enemigo muere
 
@@ -40,8 +44,13 @@ public class spawner : MonoBehaviour
     // Método que se ejecuta cada frame
     private void Update()
     {
-        // Si no estamos en una oleada, no hacemos nada
-        if (!enSpawn) return;
+        // Si no estamos en una oleada
+        if (!enSpawn) {
+            EnableTimeOutBar(true);
+            currentTime -= Time.deltaTime;
+            SetTimeOutValue(currentTime / tiempoEntreOleadas);
+            return;
+        }
 
         // Incrementamos el tiempo desde el último spawn
         tiempoUltimoSpawn += Time.deltaTime;
@@ -83,6 +92,7 @@ public class spawner : MonoBehaviour
         yield return new WaitForSeconds(tiempoEntreOleadas);
 
         // Comienza a generar enemigos
+        EnableTimeOutBar(false);
         enSpawn = true;
 
         // Calcula el número de enemigos para esta oleada
@@ -121,8 +131,21 @@ public class spawner : MonoBehaviour
 
         // Incrementa el contador de oleada
         oleada++;
+        ResetTimeOut();
+        EnableTimeOutBar(true);
 
         // Inicia la siguiente oleada
         StartCoroutine(IniciarOleada());
+    }
+    public void SetTimeOutValue(float timeout)
+    {
+        barImg.transform.localScale = new Vector3(timeout, 1.0f);
+    }
+    public void EnableTimeOutBar(bool enable)
+    {
+        barImg.gameObject.SetActive(enable);
+    }
+    void ResetTimeOut() {
+        currentTime = tiempoEntreOleadas;
     }
 }
