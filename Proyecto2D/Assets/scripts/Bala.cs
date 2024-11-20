@@ -9,13 +9,16 @@ public class Bala : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
 
     // Velocidad de la bala.
-    [SerializeField] private float velocidad = 5f;
+    [SerializeField] private float velocidad = 3f;
 
     // Daño que la bala inflige al impactar.
     [SerializeField] private int dmg = 1;
 
     // Variable que guarda el objetivo al que la bala se dirige.
     private Transform target;
+
+    // Tiempo de vida de la bala.
+    private float tiempoVida = 5f;
 
     // Método público para establecer el objetivo de la bala.
     public void fijar_objetivo(Transform objetivo){
@@ -52,6 +55,13 @@ public class Bala : MonoBehaviour
     // Método Update, llamado una vez por cuadro. Actualmente no contiene funcionalidad.
     void Update()
     {
-        
+       // Reduce el tiempo de vida con el paso del tiempo.
+        tiempoVida -= Time.deltaTime;
+
+        // Si el tiempo de vida llega a 0, destruye la bala.
+        if (tiempoVida <= 0)
+        {
+            Destroy(gameObject);
+        } 
     }
 }

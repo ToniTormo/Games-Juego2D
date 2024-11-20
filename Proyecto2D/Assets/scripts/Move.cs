@@ -19,6 +19,10 @@ public class Move : MonoBehaviour
     // Velocidad base del objeto (sin modificaciones).
     private float baseSpeed;
 
+    [SerializeField] private int ataque=5;
+    
+
+
     // Método Start, llamado al iniciar el script.
     private void Start()
     {
@@ -30,6 +34,8 @@ public class Move : MonoBehaviour
     // Método Update, llamado una vez por cuadro.
     private void Update()
     {
+        if(Base.main.game_over) return;
+        if (GameController.main.paused) return;
         // Verifica si el objeto está cerca del punto objetivo actual.
         if (Vector2.Distance(target.position, transform.position) <= 0.1f)
         {
@@ -39,6 +45,7 @@ public class Move : MonoBehaviour
             if (pathIndex >= GameController.main.path.Length)
             {
                 spawner.OnEnemigoMuerto.Invoke();
+                Base.main.dmgbase(ataque);
                 Destroy(gameObject);
                 return;
             }

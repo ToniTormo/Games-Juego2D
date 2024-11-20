@@ -9,6 +9,8 @@ public class Upgrade : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // Variable para indicar si el cursor está actualmente sobre el elemento.
     public bool mouse_over = false;
+    [SerializeField] private GameObject rangoVisual_obj; 
+
 
     // Método que se llama automáticamente cuando el cursor entra en el área del elemento.
     public void OnPointerEnter(PointerEventData eventData){
@@ -24,6 +26,7 @@ public class Upgrade : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         // Cambia el estado de hovering en UIManager a false y desactiva el objeto.
         UIManager.main.SetHovering(false);
+        rangoVisual_obj.SetActive(false);
         gameObject.SetActive(false);
     }
 }

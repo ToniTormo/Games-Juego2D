@@ -35,6 +35,10 @@ public class Torreta : MonoBehaviour
     [SerializeField] private Button upgradeButton;
 
     [SerializeField] private Transform rangoVisual; // Objeto hijo que representa el rango visual.
+    [SerializeField] private GameObject rangoVisual_obj; 
+    [SerializeField] private float tamaño_area=34; 
+
+
 
 
     // Variables de nivel y propiedades base.
@@ -42,6 +46,7 @@ public class Torreta : MonoBehaviour
     private float rangobase;
     private float veldisbase;
     private int costomejorabase;
+    private float escala;
 
     // Objetivo actual de la torreta.
     private Transform target;
@@ -85,18 +90,22 @@ public class Torreta : MonoBehaviour
     void Start()
     {
         rangobase = rango;
+        escala = tamaño_area/rangobase;
         veldisbase = veldis;
         costomejorabase = costomejora;
+        rangoVisual_obj.SetActive(false);
 
         upgradeButton.onClick.AddListener(Mejorar);
+         AjustarRangoVisual();
 
     }
 
     // Actualización por cuadro para controlar el comportamiento de la torreta.
     void Update()
     {
-       AjustarRangoVisual();
-
+        if(Base.main.game_over) return;
+       //AjustarRangoVisual();
+        if (GameController.main.paused) return;
        if (target == null){
             Findtarget();
             return;
@@ -124,11 +133,14 @@ public class Torreta : MonoBehaviour
 
     // Abre la UI de mejora de la torreta.
     public void OpenUpgrade(){
+        rangoVisual_obj.SetActive(true);
         upgradeUI.SetActive(true);
+
     }
 
     // Cierra la UI de mejora de la torreta.
     public void CloseUpgrade(){
+        rangoVisual_obj.SetActive(false);
         upgradeUI.SetActive(false);
         UIManager.main.SetHovering(false);
     }
@@ -169,8 +181,8 @@ public class Torreta : MonoBehaviour
     {
         
         // Calcula la escala en función del rango y del tamaño inicial del sprite
-        float escala = 34/rango; // Equivalencia en unity. = 34/6= 5.7
-        rangoVisual.localScale = new Vector3(5.7f*rango, 5.7f*rango, 1f);
+        rangoVisual.localScale = new Vector3(escala*rango, escala*rango, 1f);
+        
         
     }
 }

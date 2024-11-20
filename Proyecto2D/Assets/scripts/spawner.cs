@@ -14,14 +14,14 @@ public class spawner : MonoBehaviour
     [Header("Spawn Settings")]
     [SerializeField] private int enemigosBase = 6;  // Número base de enemigos en la primera oleada
     [SerializeField] private float enemigosPorSegundo = 0.5f;  // Frecuencia de spawn, cuántos enemigos por segundo
-    [SerializeField] private float tiempoEntreOleadas = 5f;  // Tiempo que pasa entre oleadas
+    [SerializeField] public float tiempoEntreOleadas = 5f;  // Tiempo que pasa entre oleadas
     [SerializeField] private float factorDificultad = 0.75f;  // Factor que incrementa la cantidad de enemigos por oleada según el nivel de dificultad
 
     private int oleada = 1;  // Contador de oleadas
     private float tiempoUltimoSpawn;  // Temporizador para controlar el tiempo entre la aparición de enemigos
     private int enemigosVivos;  // Número de enemigos actualmente vivos
     private int enemigosEnSpawn;  // Número de enemigos que faltan por generar en la oleada
-    private bool enSpawn = false;  // Estado que indica si se están generando enemigos en la oleada actual
+    public bool enSpawn = false;  // Estado que indica si se están generando enemigos en la oleada actual
     [SerializeField] private RawImage barImg;
     float currentTime;
 
@@ -44,6 +44,8 @@ public class spawner : MonoBehaviour
     // Método que se ejecuta cada frame
     private void Update()
     {
+        if(Base.main.game_over) return;
+        if (GameController.main.paused) return;
         // Si no estamos en una oleada
         if (!enSpawn) {
             EnableTimeOutBar(true);

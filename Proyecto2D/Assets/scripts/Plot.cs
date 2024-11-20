@@ -11,9 +11,13 @@ public class Plot : MonoBehaviour
     // Color que se aplica al plot cuando el cursor pasa por encima.
     [SerializeField] private Color hovercolor;
 
-    // Objeto y componente Torreta construido en el plot.
+    // Objeto y componentes Torreta, slow y smash construido en el plot.
     private GameObject torreobj;
     private Torreta torre;
+    private Slow slow;
+    private Smash smash;
+
+
 
     // Color inicial del SpriteRenderer.
     private Color color_inicial;
@@ -47,9 +51,24 @@ public class Plot : MonoBehaviour
 
         // Si ya hay una torreta en el plot, abre la interfaz de mejora de la torreta.
         if (torreobj != null){
+            try{
             torre.OpenUpgrade();
             return;
+        
+            }catch{}
+            try{
+                slow.OpenUpgrade();
+                return;
+            }catch{}
+            try{
+
+                smash.OpenUpgrade();
+                return;
+
+            }catch{}
         }
+
+        
 
         // Obtiene la torreta seleccionada actualmente en BuildManager.
         Defensa torre_nueva = BuildManager.main.GetTorreta();
@@ -65,7 +84,16 @@ public class Plot : MonoBehaviour
 
         // Instancia la torreta en la posición del plot.
         torreobj = Instantiate(torre_nueva.prefab, transform.position, Quaternion.identity);
-        torre = torreobj.GetComponent<Torreta>();
+        try{
+            torre = torreobj.GetComponent<Torreta>();
+        }catch{}
+        try{
+            slow = torreobj.GetComponent<Slow>();
+        }catch{}
+        try{
+            smash = torreobj.GetComponent<Smash>();
+        }catch{}
+        
     }
 
     // Método Update, actualmente vacío.

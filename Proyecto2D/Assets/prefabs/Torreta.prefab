@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.62352943}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.16470589}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   upgradeUI: {fileID: 9206472697010249810}
   upgradeButton: {fileID: 5834583547704245841}
   rangoVisual: {fileID: 8473064441848663831}
+  rangoVisual_obj: {fileID: 1307686280997614350}
 --- !u!1 &1954753060468384426
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,3 +684,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouse_over: 0
+  rangoVisual_obj: {fileID: 1307686280997614350}

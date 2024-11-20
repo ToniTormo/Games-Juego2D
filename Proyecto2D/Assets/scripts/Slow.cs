@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
+
 
 public class Slow : MonoBehaviour
 {
@@ -11,6 +13,27 @@ public class Slow : MonoBehaviour
     [SerializeField] private float veldis = 4f;  // Velocidad de disparo, o frecuencia con la que se activa la congelación
     [SerializeField] private float freezeTime = 1f;  // Tiempo durante el cual se congela la velocidad del enemigo
     private float tiempo_disparo;  // Temporizador para controlar la frecuencia de disparo
+    // Costo de mejora de la torreta.
+    [SerializeField] private int costomejora = 100;
+
+    // UI para la mejora de la torreta.
+    [SerializeField] private GameObject upgradeUI;
+
+    // Botón de mejora.
+    [SerializeField] private Button upgradeButton;
+
+    [SerializeField] private Transform rangoVisual; // Objeto hijo que representa el rango visual.
+    [SerializeField] private GameObject rangoVisual_obj; 
+    [SerializeField] private float tamaño_area=34;
+
+     // Variables de nivel y propiedades base.
+    private int nivel = 1;
+    private float rangobase;
+    private float veldisbase;
+    private int costomejorabase; 
+    private float escala;
+
+
 
     // Método para congelar enemigos dentro del rango
     private void Congelar()
@@ -53,11 +76,21 @@ public class Slow : MonoBehaviour
     // El método Start se ejecuta al inicio, no está siendo utilizado en este caso
     void Start()
     {
+        rangobase = rango;
+        escala = tamaño_area/rangobase;
+        veldisbase = veldis;
+        costomejorabase = costomejora;
+        rangoVisual_obj.SetActive(false);
+
+        upgradeButton.onClick.AddListener(Mejorar);
     }
 
     // El método Update se ejecuta una vez por frame
     void Update()
     {
+        if(Base.main.game_over) return;
+        if (GameController.main.paused) return;
+        AjustarRangoVisual();
         // Incrementa el temporizador de disparo con el tiempo que ha pasado desde el último frame
         tiempo_disparo += Time.deltaTime;
 
@@ -78,5 +111,58 @@ public class Slow : MonoBehaviour
 
         // Dibuja un círculo que representa el rango de acción del Slow
         Handles.DrawWireDisc(transform.position, transform.forward, rango);
+    }
+
+    public void OpenUpgrade(){
+        rangoVisual_obj.SetActive(true);
+        upgradeUI.SetActive(true);
+
+    }
+
+    // Cierra la UI de mejora de la torreta.
+    public void CloseUpgrade(){
+        rangoVisual_obj.SetActive(false);
+        upgradeUI.SetActive(false);
+        UIManager.main.SetHovering(false);
+    }
+
+    // Método para mejorar la torreta, aumentando sus estadísticas si el jugador tiene suficiente capital.
+    public void Mejorar(){
+        if (costomejora > GameController.main.capital){ 
+            return;
+        } else {
+            GameController.main.gastar(costomejora);
+            nivel++;
+            costomejora = calcular_costo();
+            veldis = calcular_velocidad();
+            rango = calcular_rango();
+            AjustarRangoVisual();
+            
+
+            CloseUpgrade();
+        }
+    }
+
+    // Calcula la nueva velocidad de disparo en función del nivel.
+    private float calcular_velocidad(){
+        return veldisbase * Mathf.Pow(nivel, 0.5f);
+    }
+
+    // Calcula el nuevo rango en función del nivel.
+    private float calcular_rango(){
+        return rangobase * Mathf.Pow(nivel, 0.4f);
+    }
+
+    // Calcula el costo de la mejora en función del nivel.
+    private int calcular_costo(){
+        return Mathf.RoundToInt(costomejorabase * Mathf.Pow(nivel, 0.8f));
+    }
+
+    private void AjustarRangoVisual()
+    {
+        
+        // Calcula la escala en función del rango y del tamaño inicial del sprite
+        rangoVisual.localScale = new Vector3(escala*rango, escala*rango, 1f);
+        
     }
 }
