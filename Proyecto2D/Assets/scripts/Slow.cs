@@ -33,11 +33,18 @@ public class Slow : MonoBehaviour
     private int costomejorabase; 
     private float escala;
 
+    private SpriteRenderer spriteRenderer; // Referencia al SpriteRenderer
+    private Color originalColor; // Almacena el color original del sprite
 
 
     // Método para congelar enemigos dentro del rango
     private void Congelar()
     {
+        // Cambia el color del sprite a azul
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = Color.cyan;
+        }
         // Realiza un CircleCast para detectar los enemigos dentro del rango
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, rango, (Vector2)transform.position, 0f, enemyMask);
 
@@ -61,6 +68,8 @@ public class Slow : MonoBehaviour
                 }
             }
         }
+        // Restaura el color después del tiempo de congelación
+        StartCoroutine(RestaurarColor());
     }
 
     // Coroutine que restablece la velocidad del enemigo después de un cierto tiempo
@@ -83,6 +92,11 @@ public class Slow : MonoBehaviour
         rangoVisual_obj.SetActive(false);
 
         upgradeButton.onClick.AddListener(Mejorar);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            originalColor = spriteRenderer.color; // Guarda el color original
+        }
     }
 
     // El método Update se ejecuta una vez por frame
@@ -164,5 +178,15 @@ public class Slow : MonoBehaviour
         // Calcula la escala en función del rango y del tamaño inicial del sprite
         rangoVisual.localScale = new Vector3(escala*rango, escala*rango, 1f);
         
+    }
+    private IEnumerator RestaurarColor()
+    {
+        yield return new WaitForSeconds(freezeTime);
+
+        // Restaura el color original del sprite
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalColor;
+        }
     }
 }
