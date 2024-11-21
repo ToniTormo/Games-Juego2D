@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class Smash : MonoBehaviour
@@ -38,6 +39,8 @@ public class Smash : MonoBehaviour
     private float veldisbase;
     private int costomejorabase; 
     private float escala;
+    [SerializeField] TextMeshProUGUI costo_mejora_txt;
+
 
 
     private void Aplastar(){
@@ -79,11 +82,16 @@ public class Smash : MonoBehaviour
     {
         if(Base.main.game_over) return;
         if (GameController.main.paused) return;
+        if(nivel >= 4){
+            costo_mejora_txt.text= "Nvl Max";   
+        }else{
+        costo_mejora_txt.text= costomejora.ToString();   
+        }    
         AjustarRangoVisual();
        // Incrementa el temporizador de disparo con el tiempo que ha pasado desde el último frame
         tiempo_disparo += Time.deltaTime;
 
-        if (tiempo_disparo >= veldis/2){
+        if (tiempo_disparo >= (1f/veldis)/2f){
             sr.sprite=sr_copia;
         }
 
@@ -118,6 +126,9 @@ public class Smash : MonoBehaviour
 
     // Método para mejorar la torreta, aumentando sus estadísticas si el jugador tiene suficiente capital.
     public void Mejorar(){
+        if (nivel>=4) {
+        return;
+        }
         if (costomejora > GameController.main.capital){ 
             return;
         } else {

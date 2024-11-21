@@ -31,18 +31,10 @@ public class Vida : MonoBehaviour
 
             // Destruye el objeto en el juego.
             Destroy(gameObject);
+            if(spawner.main.oleada >= 5){
+                GameController.main.Win();
+            }
         }
     }
 
-    // Método Start, llamado al inicio del script (actualmente vacío).
-    void Start()
-    {
-        
-    }
-
-    // Método Update, llamado una vez por cuadro (actualmente vacío).
-    void Update()
-    {
-        
-    }
 }

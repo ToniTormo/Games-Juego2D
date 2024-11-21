@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 
 // Definición de la clase GameController que hereda de MonoBehaviour, 
-// lo cual la convierte en un componente que puede añadirse a objetos en Unity.
 public class GameController : MonoBehaviour
 {
     // Variable estática para que haya una única instancia accesible desde otras clases.
@@ -20,10 +19,8 @@ public class GameController : MonoBehaviour
     // Variable para almacenar el capital actual del jugador.
     public int capital;
 
+    public bool win=false;
 
-    
-
-    //private UIManager ui;
     private bool _paused;
     public bool paused {
     get { return _paused; }
@@ -34,26 +31,20 @@ public class GameController : MonoBehaviour
     }
     }
 
-    // public bool gameover {
-    // get { return _pairsFound == gridCols * gridRows / 2; }
-    // }
+    
 
 
 
     // Método Awake, llamado cuando la instancia se inicializa. 
-    // Aquí se asigna la instancia actual a la variable estática 'main' para hacerla accesible globalmente.
     private void Awake(){
         main = this;
-        // ui = GetComponent<UIManager>();
     
     }
   
     // Método Start, llamado al inicio de la ejecución. 
-    // Inicializa el capital en 100 al comenzar el juego.
     void Start()
     {
         capital = 100; 
-        // paused = false;     
     }
 
 
@@ -62,11 +53,7 @@ public class GameController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)) {
     paused = !paused;
     }
-        // if (gameover)
-        // {
-        //     ui.EnableTimeOutBar(false);
-        //     paused = true;
-        // }
+
     }
 
     // Método para incrementar el capital en una cantidad dada.
@@ -92,6 +79,7 @@ public class GameController : MonoBehaviour
         paused = !paused;
         UIManager.main.ShowPauseMenu(paused);
     }
+
     public void SalirDelJuego()
     {
         Debug.Log("Saliendo del juego..."); 
@@ -102,9 +90,14 @@ public class GameController : MonoBehaviour
         Application.Quit();
        } 
     }
+
     public void Reiniciar()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    
+    public void Win(){
+        win=true;
     }
 
 }

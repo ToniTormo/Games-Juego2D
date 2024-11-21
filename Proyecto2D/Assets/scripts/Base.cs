@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Base : MonoBehaviour
 {
-    [SerializeField] int vida=100;
+    [SerializeField] public int vida=100;
     public static Base main;
     public bool game_over=false;
 

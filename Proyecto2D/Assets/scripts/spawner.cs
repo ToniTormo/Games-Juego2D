@@ -2,10 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class spawner : MonoBehaviour
 {
+    public static spawner main;
     // Configuraciones de los enemigos (asignado desde el inspector)
     [Header("Enemy Settings")]
     [SerializeField] private GameObject[] enemigos;  // Array de enemigos que se pueden generar
@@ -17,7 +19,7 @@ public class spawner : MonoBehaviour
     [SerializeField] public float tiempoEntreOleadas = 5f;  // Tiempo que pasa entre oleadas
     [SerializeField] private float factorDificultad = 0.75f;  // Factor que incrementa la cantidad de enemigos por oleada según el nivel de dificultad
 
-    private int oleada = 1;  // Contador de oleadas
+    public int oleada = 1;  // Contador de oleadas
     private float tiempoUltimoSpawn;  // Temporizador para controlar el tiempo entre la aparición de enemigos
     private int enemigosVivos;  // Número de enemigos actualmente vivos
     private int enemigosEnSpawn;  // Número de enemigos que faltan por generar en la oleada
@@ -25,11 +27,18 @@ public class spawner : MonoBehaviour
     [SerializeField] private RawImage barImg;
     float currentTime;
 
+    private int[] pesos;
+    private GameObject enemigoACrear;
+    [SerializeField] TextMeshProUGUI oleada_num;
+
+
+
     public static UnityEvent OnEnemigoMuerto = new UnityEvent();  // Evento que se dispara cuando un enemigo muere
 
     // Método que se ejecuta cuando el script se inicializa
     private void Awake()
     {
+        main = this;
         // Suscribe el método 'EnemigoMuerto' al evento OnEnemigoMuerto
         OnEnemigoMuerto.AddListener(EnemigoMuerto);
     }
@@ -44,8 +53,14 @@ public class spawner : MonoBehaviour
     // Método que se ejecuta cada frame
     private void Update()
     {
+        if(GameController.main.win) return;
         if(Base.main.game_over) return;
         if (GameController.main.paused) return;
+        if (oleada >= 5){
+            oleada_num.text= "Final!" ;
+        }else{
+            oleada_num.text= oleada.ToString() ;
+        }
         // Si no estamos en una oleada
         if (!enSpawn) {
             EnableTimeOutBar(true);
@@ -58,19 +73,38 @@ public class spawner : MonoBehaviour
         tiempoUltimoSpawn += Time.deltaTime;
 
         // Si ha pasado el tiempo suficiente para generar un nuevo enemigo
-        if (tiempoUltimoSpawn >= (1f / enemigosPorSegundo) && enemigosEnSpawn > 0)
-        {
-            // Creamos un enemigo
-            CrearEnemigo();
+        if (oleada < 5){
+            if (tiempoUltimoSpawn >= (1f / enemigosPorSegundo) && enemigosEnSpawn > 0)
+            {
+                // Creamos un enemigo
+                CrearEnemigo();
 
-            // Disminuimos la cantidad de enemigos por generar
-            enemigosEnSpawn--;
+                // Disminuimos la cantidad de enemigos por generar
+                enemigosEnSpawn--;
 
-            // Incrementamos el número de enemigos vivos
-            enemigosVivos++;
+                // Incrementamos el número de enemigos vivos
+                enemigosVivos++;
 
-            // Reseteamos el temporizador de spawn
-            tiempoUltimoSpawn = 0f;
+                // Reseteamos el temporizador de spawn
+                tiempoUltimoSpawn = 0f;
+            }
+        } else{
+            if (tiempoUltimoSpawn >= (1f / enemigosPorSegundo) && enemigosEnSpawn > 0)
+            {
+                if (enemigosVivos < 1){
+                // Creamos un enemigo
+                CrearEnemigo();
+
+                // Disminuimos la cantidad de enemigos por generar
+                enemigosEnSpawn--;
+
+                // Incrementamos el número de enemigos vivos
+                enemigosVivos++;
+
+                // Reseteamos el temporizador de spawn
+                tiempoUltimoSpawn = 0f;
+                }
+            }
         }
 
         // Si ya no quedan enemigos vivos ni enemigos por generar, finaliza la oleada
@@ -111,15 +145,49 @@ public class spawner : MonoBehaviour
     // Método que se encarga de crear un enemigo y posicionarlo en el mundo
     private void CrearEnemigo()
     {
+        
         // Escoge un enemigo aleatorio del array de enemigos
-        int index = Random.Range(0, enemigos.Length);
+        //int index = Random.Range(0, enemigos.Length);
+
+        switch (oleada)
+        {
+            case 1:
+                pesos = new int[] { 100, 0, 0, 0 };
+                break;
+            case 2:
+                pesos = new int[] { 70, 0, 30, 0 };
+                break;
+            case 3:
+                pesos = new int[] { 40, 30, 30, 0 };
+                break;
+            case 4:
+                pesos = new int[] { 30, 35, 35, 0};
+                break;
+            case 5:
+                pesos = new int[] { 0, 0, 0, 100};
+                break;
+            default:
+                break;
+        }
+
+        int numeroAleatorio = Random.Range(0, 100);
+        // Seleccionar el elemento basado en el número aleatorio y los pesos
+        int acumulado = 0;
+        for (int i = 0; i < enemigos.Length; i++)
+        {
+            acumulado += pesos[i];
+            if (numeroAleatorio < acumulado){
+                enemigoACrear = enemigos[i];
+                break;
+            }
+        }
+        Instantiate(enemigoACrear, GameController.main.inicio.position, Quaternion.identity);
 
         // Muestra un mensaje en la consola de Unity indicando que se ha creado un enemigo
         Debug.Log("Creando enemigo");
 
         // Crea el enemigo en la posición inicial definida por GameController
-        GameObject enemigoACrear = enemigos[index];
-        Instantiate(enemigoACrear, GameController.main.inicio.position, Quaternion.identity);
+        
     }
 
     // Método que se ejecuta al final de cada oleada

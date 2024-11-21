@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 // Clase UIManager que administra el estado de la interfaz de usuario en el juego.
 public class UIManager : MonoBehaviour
@@ -13,6 +14,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject gameover_screen;
+    [SerializeField] private GameObject victory_screen;
+    [SerializeField] TextMeshProUGUI vida_txt;
+
 
     public void ShowPauseMenu(bool isPaused)
     {
@@ -31,6 +35,7 @@ public class UIManager : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         gameover_screen.SetActive(false);
+        victory_screen.SetActive(false);
 
     }
 
@@ -40,6 +45,10 @@ public class UIManager : MonoBehaviour
         if(Base.main.game_over){
             gameover_screen.SetActive(true);
         }
+        if(GameController.main.win){
+            victory_screen.SetActive(true);
+        }
+        vida_txt.text = Base.main.vida.ToString();
     }
 
     // Método para establecer el estado de "hovering" (si el cursor está sobre la interfaz).
@@ -51,7 +60,5 @@ public class UIManager : MonoBehaviour
     public bool IsHoveringUI(){
         return hovering;
     }
-    // public void OnOpenSettings(){
 
-    // }
 }

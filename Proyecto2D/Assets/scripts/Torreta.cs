@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using TMPro;
 
 // Clase Torreta, que controla el comportamiento de una torreta en el juego.
 public class Torreta : MonoBehaviour
@@ -37,6 +38,8 @@ public class Torreta : MonoBehaviour
     [SerializeField] private Transform rangoVisual; // Objeto hijo que representa el rango visual.
     [SerializeField] private GameObject rangoVisual_obj; 
     [SerializeField] private float tamaño_area=34; 
+    [SerializeField] TextMeshProUGUI costo_mejora_txt;
+
 
 
 
@@ -106,6 +109,11 @@ public class Torreta : MonoBehaviour
         if(Base.main.game_over) return;
        //AjustarRangoVisual();
         if (GameController.main.paused) return;
+        if(nivel >= 4){
+            costo_mejora_txt.text= "Nvl Max";   
+        }else{
+        costo_mejora_txt.text= costomejora.ToString();   
+        }    
        if (target == null){
             Findtarget();
             return;
@@ -147,6 +155,9 @@ public class Torreta : MonoBehaviour
 
     // Método para mejorar la torreta, aumentando sus estadísticas si el jugador tiene suficiente capital.
     public void Mejorar(){
+        if (nivel>=4) {
+        return;
+        }
         if (costomejora > GameController.main.capital){ 
             return;
         } else {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class Slow : MonoBehaviour
@@ -35,6 +36,8 @@ public class Slow : MonoBehaviour
 
     private SpriteRenderer spriteRenderer; // Referencia al SpriteRenderer
     private Color originalColor; // Almacena el color original del sprite
+
+    [SerializeField] TextMeshProUGUI costo_mejora_txt;
 
 
     // Método para congelar enemigos dentro del rango
@@ -103,7 +106,14 @@ public class Slow : MonoBehaviour
     void Update()
     {
         if(Base.main.game_over) return;
+        if (GameController.main.win) return;
         if (GameController.main.paused) return;
+        if(nivel >= 4){
+            costo_mejora_txt.text= "Nvl Max";   
+        }else{
+        costo_mejora_txt.text= costomejora.ToString();   
+        }    
+
         AjustarRangoVisual();
         // Incrementa el temporizador de disparo con el tiempo que ha pasado desde el último frame
         tiempo_disparo += Time.deltaTime;
@@ -142,6 +152,9 @@ public class Slow : MonoBehaviour
 
     // Método para mejorar la torreta, aumentando sus estadísticas si el jugador tiene suficiente capital.
     public void Mejorar(){
+        if (nivel>=4) {
+        return;
+        }
         if (costomejora > GameController.main.capital){ 
             return;
         } else {
