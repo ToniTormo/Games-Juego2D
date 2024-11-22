@@ -384,6 +384,7 @@ GameObject:
   - component: {fileID: 6642967036935806278}
   - component: {fileID: 3137127541974392633}
   - component: {fileID: 5901049949716729235}
+  - component: {fileID: -91015005911167273}
   m_Layer: 3
   m_Name: Torre_hielo
   m_TagString: Untagged
@@ -475,16 +476,28 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  rango: 3
-  veldis: 0.25
-  freezeTime: 1
+  rango: 4
+  veldis: 1.5
+  freezeTime: 3
   costomejora: 100
   upgradeUI: {fileID: 5754436641895469350}
   upgradeButton: {fileID: 8638235842503360762}
   rangoVisual: {fileID: 6786080450649900565}
   rangoVisual_obj: {fileID: 349889631201069902}
-  "tama\xF1o_area": 22
+  "tama\xF1o_area": 29.5
   costo_mejora_txt: {fileID: 5837140721529058371}
+--- !u!114 &-91015005911167273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867787358411435584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23bea8ea6071664b95478a1b0af7504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5528498967617094955
 GameObject:
   m_ObjectHideFlags: 0

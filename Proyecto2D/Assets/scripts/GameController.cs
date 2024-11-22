@@ -45,6 +45,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         capital = 100; 
+        paused=false;
     }
 
 

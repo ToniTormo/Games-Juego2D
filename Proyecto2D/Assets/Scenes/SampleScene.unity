@@ -3526,7 +3526,7 @@ MonoBehaviour:
   - {fileID: 443255350}
   - {fileID: 1810012029}
   inicio: {fileID: 1706770704}
-  capital: 0
+  capital: 10000
   win: 0
 --- !u!4 &1160201237
 Transform:
@@ -3560,10 +3560,10 @@ MonoBehaviour:
   - {fileID: 8346216442067062881, guid: b5765e21ca110f74890281ed460a7bce, type: 3}
   - {fileID: 8346216442067062881, guid: d1ff1f60fddee094086ced38ac625263, type: 3}
   - {fileID: 8346216442067062881, guid: a94f6d40bb32cb445a0c83a47d07528b, type: 3}
-  enemigosBase: 3
-  enemigosPorSegundo: 0.25
-  tiempoEntreOleadas: 8
-  factorDificultad: 0.75
+  enemigosBase: 20
+  enemigosPorSegundo: 0.5
+  tiempoEntreOleadas: 10
+  factorDificultad: 1
   oleada: 1
   enSpawn: 0
   barImg: {fileID: 1002925357}
@@ -3585,13 +3585,13 @@ MonoBehaviour:
     coste: 50
     prefab: {fileID: 1860865177305235149, guid: 79fdd58ffbf53a843b0c79f1265c351c, type: 3}
   - name: Slow
-    coste: 10
+    coste: 100
     prefab: {fileID: 4867787358411435584, guid: c27999b1b43f3324fb02a59d0c811cee, type: 3}
   - name: Mago
-    coste: 10
+    coste: 150
     prefab: {fileID: 1860865177305235149, guid: 944bb7ce44f38764182de25eabaa2cb5, type: 3}
   - name: Smash
-    coste: 10
+    coste: 200
     prefab: {fileID: 4867787358411435584, guid: b7218f06323b3db4eb8ca945a1f4a256, type: 3}
 --- !u!114 &1160201240
 MonoBehaviour:
@@ -3981,8 +3981,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 3
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 934eab615e502bc479b631e464a089a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7321,6 +7321,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 672221575}
     m_Modifications:
+    - target: {fileID: 44849532771772921, guid: 5108298067e9e22499586e90912d4a4e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 44849532771772921, guid: 5108298067e9e22499586e90912d4a4e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 44849532771772921, guid: 5108298067e9e22499586e90912d4a4e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5927705090979182003, guid: 5108298067e9e22499586e90912d4a4e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.42

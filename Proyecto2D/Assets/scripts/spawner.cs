@@ -26,6 +26,7 @@ public class spawner : MonoBehaviour
     public bool enSpawn = false;  // Estado que indica si se están generando enemigos en la oleada actual
     [SerializeField] private RawImage barImg;
     float currentTime;
+    private float enemigosPorSegundo_base;
 
     private int[] pesos;
     private GameObject enemigoACrear;
@@ -46,6 +47,7 @@ public class spawner : MonoBehaviour
     // Método que se ejecuta al inicio del juego
     private void Start()
     {
+        enemigosPorSegundo_base=enemigosPorSegundo;
         // Inicia la primera oleada con la corutina
         StartCoroutine(IniciarOleada());
     }
@@ -133,6 +135,7 @@ public class spawner : MonoBehaviour
 
         // Calcula el número de enemigos para esta oleada
         enemigosEnSpawn = CalcularEnemigosPorOleada();
+        enemigosPorSegundo=CalcularFrecuencia();
     }
 
     // Método que calcula cuántos enemigos generaremos en la oleada actual
@@ -142,12 +145,15 @@ public class spawner : MonoBehaviour
         return Mathf.RoundToInt(enemigosBase * Mathf.Pow(oleada, factorDificultad));
     }
 
+    private float CalcularFrecuencia(){
+        return enemigosPorSegundo_base * Mathf.Pow(oleada, factorDificultad);
+    }
+
     // Método que se encarga de crear un enemigo y posicionarlo en el mundo
     private void CrearEnemigo()
     {
         
         // Escoge un enemigo aleatorio del array de enemigos
-        //int index = Random.Range(0, enemigos.Length);
 
         switch (oleada)
         {

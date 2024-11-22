@@ -107,8 +107,9 @@ public class Torreta : MonoBehaviour
     void Update()
     {
         if(Base.main.game_over) return;
-       //AjustarRangoVisual();
         if (GameController.main.paused) return;
+        escala = tamaño_area/rangobase;
+        AjustarRangoVisual();
         if(nivel >= 4){
             costo_mejora_txt.text= "Nvl Max";   
         }else{
@@ -175,12 +176,12 @@ public class Torreta : MonoBehaviour
 
     // Calcula la nueva velocidad de disparo en función del nivel.
     private float calcular_velocidad(){
-        return veldisbase * Mathf.Pow(nivel, 0.5f);
+        return veldisbase * Mathf.Pow(nivel, 0.4f);
     }
 
     // Calcula el nuevo rango en función del nivel.
     private float calcular_rango(){
-        return rangobase * Mathf.Pow(nivel, 0.4f);
+        return rangobase * Mathf.Pow(nivel, 0.25f);
     }
 
     // Calcula el costo de la mejora en función del nivel.

@@ -11,9 +11,10 @@ public class Slow : MonoBehaviour
     // Variables públicas para ser asignadas en el inspector de Unity
     [SerializeField] private LayerMask enemyMask;  // Máscara de capa para identificar los enemigos
     [SerializeField] private float rango = 5f;  // Rango de acción para detectar enemigos
-    [SerializeField] private float veldis = 4f;  // Velocidad de disparo, o frecuencia con la que se activa la congelación
-    [SerializeField] private float freezeTime = 1f;  // Tiempo durante el cual se congela la velocidad del enemigo
+    [SerializeField] private float veldis = 2f;  // Velocidad de disparo, o frecuencia con la que se activa la congelación
+    [SerializeField] private float freezeTime = 3f;  // Tiempo durante el cual se congela la velocidad del enemigo
     private float tiempo_disparo;  // Temporizador para controlar la frecuencia de disparo
+    private float freezeTime_contador;
     // Costo de mejora de la torreta.
     [SerializeField] private int costomejora = 100;
 
@@ -30,7 +31,7 @@ public class Slow : MonoBehaviour
      // Variables de nivel y propiedades base.
     private int nivel = 1;
     private float rangobase;
-    private float veldisbase;
+    private float freezetimebase;
     private int costomejorabase; 
     private float escala;
 
@@ -39,58 +40,61 @@ public class Slow : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI costo_mejora_txt;
 
+    private RaycastHit2D[] hits;
+    private RaycastHit2D[] congelados;
+    private Dictionary<Move, bool> afectados = new Dictionary<Move, bool>();
+
+
+    
 
     // Método para congelar enemigos dentro del rango
     private void Congelar()
     {
-        // Cambia el color del sprite a azul
+        congelados = hits;
+        if (hits.Length > 0)
+        {
+            for (int i = 0; i < hits.Length; i++)
+            {
+                RaycastHit2D hit = hits[i];
+                Move em = hit.transform.GetComponent<Move>();
+                if (em != null && !afectados.ContainsKey(em)) // Si no ha sido afectado por esta torreta
+                {
+                    em.Congelar(); // Aplica ralentización
+                    afectados[em] = true; // Marca al enemigo como afectado por esta torreta
+                }
+            }
+        }
         if (spriteRenderer != null)
         {
             spriteRenderer.color = Color.cyan;
         }
-        // Realiza un CircleCast para detectar los enemigos dentro del rango
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, rango, (Vector2)transform.position, 0f, enemyMask);
+    }
 
-        // Si se detectaron enemigos
-        if (hits.Length > 0)
+
+    private void RestablecerVelocidad()
+    {
+        foreach (var em in afectados.Keys)
         {
-            // Recorre todos los enemigos detectados
-            for (int i = 0; i < hits.Length; i++)
+            if (em != null) // Asegura que el enemigo no haya sido destruido
             {
-                RaycastHit2D hit = hits[i];  // Toma el enemigo actual
-
-                // Obtiene el componente Move del enemigo para modificar su velocidad
-                Move em = hit.transform.GetComponent<Move>();
-                if (em != null)  // Verifica que el enemigo tenga un componente Move
-                {
-                    // Cambia la velocidad del enemigo a la mitad
-                    em.Cambio_speed(0.5f);
-
-                    // Inicia la coroutine para restablecer la velocidad del enemigo después de un tiempo
-                    StartCoroutine(RestablecerVelocidad(em));
-                }
+                em.Descongelar(); // Elimina ralentización
             }
         }
-        // Restaura el color después del tiempo de congelación
-        StartCoroutine(RestaurarColor());
+        afectados.Clear(); // Limpia el registro de enemigos afectados por esta torreta
+        
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalColor;
+        }
     }
 
-    // Coroutine que restablece la velocidad del enemigo después de un cierto tiempo
-    private IEnumerator RestablecerVelocidad(Move em)
-    {
-        // Espera el tiempo especificado por freezeTime
-        yield return new WaitForSeconds(freezeTime);
-
-        // Restaura la velocidad del enemigo al valor original
-        em.Reset_speed();
-    }
 
     // El método Start se ejecuta al inicio, no está siendo utilizado en este caso
     void Start()
     {
         rangobase = rango;
         escala = tamaño_area/rangobase;
-        veldisbase = veldis;
+        freezetimebase= freezeTime;
         costomejorabase = costomejora;
         rangoVisual_obj.SetActive(false);
 
@@ -113,18 +117,49 @@ public class Slow : MonoBehaviour
         }else{
         costo_mejora_txt.text= costomejora.ToString();   
         }    
-
+        escala = tamaño_area/rangobase;
         AjustarRangoVisual();
         // Incrementa el temporizador de disparo con el tiempo que ha pasado desde el último frame
-        tiempo_disparo += Time.deltaTime;
+        
+        try{
+        hits = Physics2D.CircleCastAll(transform.position, rango, (Vector2)transform.position, 0f, enemyMask);
+        }catch{}
 
-        // Si ha pasado suficiente tiempo (en función de veldis), ejecuta la función Congelar
+        StartCoroutine(Effect());
+
+        
+        // if(freezeTime_contador < freezeTime){
+        //         tiempo_disparo = 0f;
+        //         freezeTime_contador += Time.deltaTime;
+        //     }else{
+        //         if (spriteRenderer != null)
+        //         {
+        //         spriteRenderer.color = originalColor;
+        //         }
+        //         RestablecerVelocidad();
+                
+        //     }
+    }
+
+    private IEnumerator Effect(){
+        tiempo_disparo += Time.deltaTime;        
         if (tiempo_disparo >= 1f / veldis)
         {
+        // Si ha pasado suficiente tiempo (en función de veldis), ejecuta la función Congelar
+            
             Congelar();
-            // Reinicia el temporizador para esperar el siguiente disparo
+        //         // Reinicia el temporizador para esperar el siguiente disparo
+
+            yield return new WaitForSeconds(freezeTime);
+
+            RestablecerVelocidad();
             tiempo_disparo = 0f;
+
+        //         freezeTime_contador=0f;
+            
+            
         }
+
     }
 
     // Método para dibujar una visualización del rango de acción en el editor de Unity (cuando el objeto está seleccionado)
@@ -161,23 +196,21 @@ public class Slow : MonoBehaviour
             GameController.main.gastar(costomejora);
             nivel++;
             costomejora = calcular_costo();
-            veldis = calcular_velocidad();
+            freezeTime = calcular_velocidad();
             rango = calcular_rango();
             AjustarRangoVisual();
-            
-
             CloseUpgrade();
         }
     }
 
     // Calcula la nueva velocidad de disparo en función del nivel.
     private float calcular_velocidad(){
-        return veldisbase * Mathf.Pow(nivel, 0.5f);
+        return freezetimebase * Mathf.Pow(nivel, 0.4f);
     }
 
     // Calcula el nuevo rango en función del nivel.
     private float calcular_rango(){
-        return rangobase * Mathf.Pow(nivel, 0.4f);
+        return rangobase * Mathf.Pow(nivel, 0.3f);
     }
 
     // Calcula el costo de la mejora en función del nivel.
@@ -192,14 +225,5 @@ public class Slow : MonoBehaviour
         rangoVisual.localScale = new Vector3(escala*rango, escala*rango, 1f);
         
     }
-    private IEnumerator RestaurarColor()
-    {
-        yield return new WaitForSeconds(freezeTime);
-
-        // Restaura el color original del sprite
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.color = originalColor;
-        }
-    }
+    
 }

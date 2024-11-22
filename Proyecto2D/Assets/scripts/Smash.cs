@@ -11,7 +11,7 @@ public class Smash : MonoBehaviour
 
     // Variables públicas para ser asignadas en el inspector de Unity
     [SerializeField] private LayerMask enemyMask;  // Máscara de capa para identificar los enemigos
-    [SerializeField] private float rango = 5f;  // Rango de acción para detectar enemigos
+    [SerializeField] private float rango = 2.2f;  // Rango de acción para detectar enemigos
     [SerializeField] private float veldis = 4f; // Velocidad de disparo, o frecuencia con la que se activa la congelación
     [SerializeField] private int dmg = 1000;
     [SerializeField] private SpriteRenderer sr;
@@ -86,7 +86,8 @@ public class Smash : MonoBehaviour
             costo_mejora_txt.text= "Nvl Max";   
         }else{
         costo_mejora_txt.text= costomejora.ToString();   
-        }    
+        }
+        escala = tamaño_area/rangobase;    
         AjustarRangoVisual();
        // Incrementa el temporizador de disparo con el tiempo que ha pasado desde el último frame
         tiempo_disparo += Time.deltaTime;
@@ -146,12 +147,12 @@ public class Smash : MonoBehaviour
 
     // Calcula la nueva velocidad de disparo en función del nivel.
     private float calcular_velocidad(){
-        return veldisbase * Mathf.Pow(nivel, 0.5f);
+        return veldisbase * Mathf.Pow(nivel, 0.3f);
     }
 
     // Calcula el nuevo rango en función del nivel.
     private float calcular_rango(){
-        return rangobase * Mathf.Pow(nivel, 0.4f);
+        return rangobase * Mathf.Pow(nivel, 0.2f);
     }
 
     // Calcula el costo de la mejora en función del nivel.
@@ -162,7 +163,6 @@ public class Smash : MonoBehaviour
     private void AjustarRangoVisual()
     {
         
-        // Calcula la escala en función del rango y del tamaño inicial del sprite
         rangoVisual.localScale = new Vector3(escala*rango, escala*rango, 1f);
         
     }

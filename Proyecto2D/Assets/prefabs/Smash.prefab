@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 6642967036935806278}
   - component: {fileID: 3137127541974392633}
   - component: {fileID: 8218366932812908009}
+  - component: {fileID: -4027159155721214231}
   m_Layer: 3
   m_Name: Smash
   m_TagString: Untagged
@@ -354,18 +355,30 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  rango: 3
-  veldis: 0.25
-  dmg: 1000
+  rango: 2.2
+  veldis: 0.2
+  dmg: 150
   sr: {fileID: 3137127541974392633}
   new_sr: {fileID: 21300000, guid: c0f26f7e8b460f444ba02678878f6efe, type: 3}
-  costomejora: 100
+  costomejora: 200
   upgradeUI: {fileID: 1499345434032794856}
   upgradeButton: {fileID: 873155540204833480}
   rangoVisual: {fileID: 6220266086089192453}
   rangoVisual_obj: {fileID: 6202937289555773211}
-  "tama\xF1o_area": 22
+  "tama\xF1o_area": 16
   costo_mejora_txt: {fileID: 8943444607821175467}
+--- !u!114 &-4027159155721214231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867787358411435584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23bea8ea6071664b95478a1b0af7504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5430821905340025418
 GameObject:
   m_ObjectHideFlags: 0

@@ -159,7 +159,7 @@ Transform:
   m_GameObject: {fileID: 660559152252891013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.93, z: 0}
+  m_LocalPosition: {x: 0, y: 3.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -215,16 +215,16 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  rango: 6
+  rango: 3
   bulletPrefab: {fileID: 2824330237445575776, guid: 18e0e01b21bb73448a2ccc590304ac40, type: 3}
   canon: {fileID: 2433608968909376472}
-  veldis: 10
-  costomejora: 160
+  veldis: 9
+  costomejora: 150
   upgradeUI: {fileID: 9206472697010249810}
   upgradeButton: {fileID: 5834583547704245841}
   rangoVisual: {fileID: 4357849144932488057}
   rangoVisual_obj: {fileID: 3063761700638599804}
-  "tama\xF1o_area": 12
+  "tama\xF1o_area": 6
   costo_mejora_txt: {fileID: 1029863875605721494}
 --- !u!1 &1954753060468384426
 GameObject:
@@ -236,6 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3899706196706035877}
   - component: {fileID: 6890644440913055141}
+  - component: {fileID: 7697481250053777721}
   m_Layer: 3
   m_Name: Torre_mago
   m_TagString: Untagged
@@ -313,6 +314,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7697481250053777721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954753060468384426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23bea8ea6071664b95478a1b0af7504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3063761700638599804
 GameObject:
   m_ObjectHideFlags: 0
