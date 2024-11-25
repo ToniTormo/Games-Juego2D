@@ -31,7 +31,7 @@ public class Slow : MonoBehaviour
      // Variables de nivel y propiedades base.
     private int nivel = 1;
     private float rangobase;
-    private float freezetimebase;
+    // private float veldisbase;
     private int costomejorabase; 
     private float escala;
 
@@ -43,9 +43,6 @@ public class Slow : MonoBehaviour
     private RaycastHit2D[] hits;
     private RaycastHit2D[] congelados;
     private Dictionary<Move, bool> afectados = new Dictionary<Move, bool>();
-
-
-    
 
     // Método para congelar enemigos dentro del rango
     private void Congelar()
@@ -94,7 +91,6 @@ public class Slow : MonoBehaviour
     {
         rangobase = rango;
         escala = tamaño_area/rangobase;
-        freezetimebase= freezeTime;
         costomejorabase = costomejora;
         rangoVisual_obj.SetActive(false);
 
@@ -126,19 +122,6 @@ public class Slow : MonoBehaviour
         }catch{}
 
         StartCoroutine(Effect());
-
-        
-        // if(freezeTime_contador < freezeTime){
-        //         tiempo_disparo = 0f;
-        //         freezeTime_contador += Time.deltaTime;
-        //     }else{
-        //         if (spriteRenderer != null)
-        //         {
-        //         spriteRenderer.color = originalColor;
-        //         }
-        //         RestablecerVelocidad();
-                
-        //     }
     }
 
     private IEnumerator Effect(){
@@ -148,14 +131,12 @@ public class Slow : MonoBehaviour
         // Si ha pasado suficiente tiempo (en función de veldis), ejecuta la función Congelar
             
             Congelar();
-        //         // Reinicia el temporizador para esperar el siguiente disparo
+        // Reinicia el temporizador para esperar el siguiente disparo
 
             yield return new WaitForSeconds(freezeTime);
 
             RestablecerVelocidad();
             tiempo_disparo = 0f;
-
-        //         freezeTime_contador=0f;
             
             
         }
@@ -163,14 +144,14 @@ public class Slow : MonoBehaviour
     }
 
     // Método para dibujar una visualización del rango de acción en el editor de Unity (cuando el objeto está seleccionado)
-    private void OnDrawGizmosSelected()
-    {
-        // Establece el color de los Gizmos a cian
-        Handles.color = Color.cyan;
+    // private void OnDrawGizmosSelected()
+    // {
+    //     // Establece el color de los Gizmos a cian
+    //     Handles.color = Color.cyan;
 
-        // Dibuja un círculo que representa el rango de acción del Slow
-        Handles.DrawWireDisc(transform.position, transform.forward, rango);
-    }
+    //     // Dibuja un círculo que representa el rango de acción del Slow
+    //     Handles.DrawWireDisc(transform.position, transform.forward, rango);
+    // }
 
     public void OpenUpgrade(){
         rangoVisual_obj.SetActive(true);
@@ -196,17 +177,13 @@ public class Slow : MonoBehaviour
             GameController.main.gastar(costomejora);
             nivel++;
             costomejora = calcular_costo();
-            freezeTime = calcular_velocidad();
+            // veldis = calcular_velocidad();
             rango = calcular_rango();
             AjustarRangoVisual();
             CloseUpgrade();
         }
     }
 
-    // Calcula la nueva velocidad de disparo en función del nivel.
-    private float calcular_velocidad(){
-        return freezetimebase * Mathf.Pow(nivel, 0.4f);
-    }
 
     // Calcula el nuevo rango en función del nivel.
     private float calcular_rango(){

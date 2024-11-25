@@ -31,9 +31,6 @@ public class GameController : MonoBehaviour
     }
     }
 
-    
-
-
 
     // Método Awake, llamado cuando la instancia se inicializa. 
     private void Awake(){

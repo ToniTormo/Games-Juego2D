@@ -31,11 +31,6 @@ public class Menu : MonoBehaviour
         anim.SetBool("Menu_open", menu_abierto);
     }
 
-    // Método Start, llamado al inicio del script (actualmente vacío).
-    void Start()
-    {
-        
-    }
     
     void Update()
     {

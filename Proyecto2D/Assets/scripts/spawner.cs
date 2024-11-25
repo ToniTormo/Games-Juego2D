@@ -152,9 +152,7 @@ public class spawner : MonoBehaviour
     // Método que se encarga de crear un enemigo y posicionarlo en el mundo
     private void CrearEnemigo()
     {
-        
         // Escoge un enemigo aleatorio del array de enemigos
-
         switch (oleada)
         {
             case 1:
@@ -175,9 +173,7 @@ public class spawner : MonoBehaviour
             default:
                 break;
         }
-
         int numeroAleatorio = Random.Range(0, 100);
-        // Seleccionar el elemento basado en el número aleatorio y los pesos
         int acumulado = 0;
         for (int i = 0; i < enemigos.Length; i++)
         {

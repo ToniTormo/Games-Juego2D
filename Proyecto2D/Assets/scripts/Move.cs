@@ -11,6 +11,7 @@ public class Move : MonoBehaviour
     private Transform target;
     private int pathIndex = 0;
     private float baseSpeed;
+    private float slow=3;
 
     private int slowCounter = 0; // Número de torretas ralentizando este enemigo.
 
@@ -27,7 +28,7 @@ public class Move : MonoBehaviour
         if (Base.main.game_over) return;
         if (GameController.main.paused) return;
         if(slowCounter > 0){
-            speed= baseSpeed/2;
+            speed= baseSpeed/slow;
         }else{
             speed=baseSpeed;
         }
@@ -65,29 +66,5 @@ public class Move : MonoBehaviour
         }
     }
 
-    // public void Cambio_speed(float reduction = 0.8f)
-    // {
-    //     slowCounter++;
-    //     adjust_speed(reduction);
-    // }
-
-    // public void Reset_speed(float reduction = 0.8f)
-    // {
-    //     slowCounter--;
-    //     if (slowCounter < 0) slowCounter = 0; // Asegúrate de que nunca sea negativo.
-    //     adjust_speed(reduction);
-    // }
-
-    // private void adjust_speed(float reduction)
-    // {
-    //     if (slowCounter != 0)
-    //     {
-    //         speed = baseSpeed - (reduction * slowCounter);
-    //         if (speed < 0.3f) speed = 0.3f; // Velocidad mínima.
-    //     }
-    //     else
-    //     {
-    //         speed = baseSpeed; // Restaura la velocidad original.
-    //     }
-    // }
+    
 }

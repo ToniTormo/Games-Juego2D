@@ -96,9 +96,5 @@ public class Plot : MonoBehaviour
         
     }
 
-    // Método Update, actualmente vacío.
-    void Update()
-    {
-        
-    }
+
 }

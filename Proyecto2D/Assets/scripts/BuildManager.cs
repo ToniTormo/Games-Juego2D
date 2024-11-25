@@ -28,16 +28,4 @@ public class BuildManager : MonoBehaviour
     public void Establecer(int _torreta){
         torreta_actual = _torreta;
     }
-
-    // Método Start, que se llama una vez al iniciar el script. Actualmente no contiene funcionalidad.
-    void Start()
-    {
-        
-    }
-
-    // Método Update, que se llama una vez por cuadro. Actualmente no contiene funcionalidad.
-    void Update()
-    {
-        
-    }
 }

@@ -40,10 +40,6 @@ public class Torreta : MonoBehaviour
     [SerializeField] private float tamaño_area=34; 
     [SerializeField] TextMeshProUGUI costo_mejora_txt;
 
-
-
-
-
     // Variables de nivel y propiedades base.
     private int nivel = 1;
     private float rangobase;
@@ -58,11 +54,11 @@ public class Torreta : MonoBehaviour
     private float tiempo_disparo;
 
     // Método para dibujar el alcance de la torreta en el editor.
-    private void OnDrawGizmosSelected()
-    {
-        Handles.color = Color.cyan;
-        Handles.DrawWireDisc(transform.position, transform.forward, rango);
-    }
+    // private void OnDrawGizmosSelected()
+    // {
+    //     Handles.color = Color.cyan;
+    //     Handles.DrawWireDisc(transform.position, transform.forward, rango);
+    // }
 
 
     // Encuentra el objetivo más cercano en el rango de la torreta.

@@ -96,7 +96,7 @@ public class Smash : MonoBehaviour
             sr.sprite=sr_copia;
         }
 
-        // Si ha pasado suficiente tiempo (en función de veldis), ejecuta la función Congelar
+        // Si ha pasado suficiente tiempo 
         if (tiempo_disparo >= 1f / veldis)
         {
             Aplastar();
@@ -104,14 +104,14 @@ public class Smash : MonoBehaviour
             tiempo_disparo = 0f;
         } 
     }
-    private void OnDrawGizmosSelected()
-    {
-        // Establece el color de los Gizmos a cian
-        Handles.color = Color.cyan;
+    // private void OnDrawGizmosSelected()
+    // {
+    //     // Establece el color de los Gizmos a cian
+    //     Handles.color = Color.cyan;
 
-        // Dibuja un círculo que representa el rango de acción del Slow
-        Handles.DrawWireDisc(transform.position, transform.forward, rango);
-    }
+    //     // Dibuja un círculo que representa el rango de acción del Slow
+    //     Handles.DrawWireDisc(transform.position, transform.forward, rango);
+    // }
     public void OpenUpgrade(){
         rangoVisual_obj.SetActive(true);
         upgradeUI.SetActive(true);

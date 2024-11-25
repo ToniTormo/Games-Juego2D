@@ -478,7 +478,7 @@ MonoBehaviour:
     m_Bits: 64
   rango: 4
   veldis: 1.5
-  freezeTime: 3
+  freezeTime: 4
   costomejora: 100
   upgradeUI: {fileID: 5754436641895469350}
   upgradeButton: {fileID: 8638235842503360762}
