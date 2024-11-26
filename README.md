@@ -1,5 +1,4 @@
-Hola a todos,
-Queremos presentaros _Escudos de Katzenpisse_, un juego de tipo Tower Defense que hemos desarrollado con mucho esfuerzo y dedicación. En este juego, tu misión es proteger el reino de Katzenpisse de hordas de enemigos liderados por un villano felino con poderes oscuros. Para lograrlo, deberás colocar estratégicamente distintas torretas y administrar sabiamente tus recursos.
+Hola a todos, queremos presentaros _Escudos de Katzenpisse_, un juego de tipo Tower Defense que hemos desarrollado con mucho esfuerzo y dedicación. En este juego, tu misión es proteger el reino de Katzenpisse de hordas de enemigos liderados por un villano felino con poderes oscuros. Para lograrlo, deberás colocar estratégicamente distintas torretas y administrar sabiamente tus recursos.
 
 El juego ha sido desarrollado en Unity, utilizando C# para programar todas las mecánicas del gameplay. Nos hemos enfocado en que el código sea limpio y modular, lo que facilita añadir nuevos tipos de torretas o enemigos.
 
